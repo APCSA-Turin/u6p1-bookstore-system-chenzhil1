@@ -19,7 +19,7 @@ public class IdGenerate{ //This class contains statics variable and methods, you
 
     // public generateID(){} //generates a new id, when called it will increment the currentId by 1.. Hint pay attention to data type of currentId
     public static void generateID() {
-        currentId = "" + Integer.parseInt(currentId) + 1;
+        currentId = "" + (Integer.parseInt(currentId) + 1);
 
     }
 }

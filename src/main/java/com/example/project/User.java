@@ -56,7 +56,7 @@ public class User{
     }
     // public String userInfo(){} //returns  "Name: []\nID: []\nBooks:\n[]"
     public String userInfo() {
-        String info = "Name: " + name + "\nID: " + Id + "\nBooks:\n" + bookListInfo();
+        String info = "Name: " + name + "\nId: " + Id + "\nBooks: \n" + bookListInfo();
         return info;
     }
 }
