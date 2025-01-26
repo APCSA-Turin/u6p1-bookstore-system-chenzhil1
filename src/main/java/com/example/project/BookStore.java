@@ -118,6 +118,9 @@ public class BookStore{
         }
     }  
 
+    public void setBooks(Book[] books) {
+        this.books = books;
+    }
        
     // public String bookStoreBookInfo(){} //you are not tested on this method but use it for debugging purposes
 
