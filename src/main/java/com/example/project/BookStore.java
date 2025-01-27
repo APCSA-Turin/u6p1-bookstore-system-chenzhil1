@@ -25,18 +25,18 @@ public class BookStore{
 
     // public void addUser(User user){} 
     public void addUser(User user) {
-        for(int i = 0; i < users.length; i ++) {
+        for(int i = 0; i < users.length; i ++) { //Loop and check when a user is null or not exist
             if(users[i] == null) {
-                users[i] = user;
+                users[i] = user; 
                 break;
             }
         }
     }
     // public void removeUser(User user){}
     public void removeUser(User user) {
-        for(int i = 0; i < users.length; i ++) {
-            if(users[i] != null) {
-                if(users[i].getId().equals(user.getId())) {
+        for(int i = 0; i < users.length; i ++) { //Loop to check if user exist
+            if(users[i] != null) { 
+                if(users[i].getId().equals(user.getId())) { //Check if user is the target by comparing ID
                     users[i] = null;
                 }
             }
@@ -46,58 +46,58 @@ public class BookStore{
     }
     // public void consolidateUsers(){}
     public void consolidateUsers() {
-        int slot = 0;
-        for(int i = 0; i < users.length; i ++) {
+        int slot = 0; 
+        for(int i = 0; i < users.length; i ++) { //Loop to check if user exists
             if(users[i] != null) {
-                users[slot] = users[i];
+                users[slot] = users[i]; //Set user to first avaliable index.
                 if(i != slot) {
                     users[i] = null;
                 }
-                slot ++;
+                slot ++; //Add 1 indicating the index was occupied.
             }
         }
     }
     // public void addBook(Book book){}
     public void addBook(Book book) {
-        Book[] temp = new Book[books.length + 1];
-        for(int i = 0; i < books.length; i ++) {
+        Book[] temp = new Book[books.length + 1]; //Make a new book list that allow one more book
+        for(int i = 0; i < books.length; i ++) { //Copy original to new book List
             temp[i] = books[i];
         }
-        temp[temp.length - 1] = book;
-        books = temp;
+        temp[temp.length - 1] = book; //Add book
+        books = temp; //Set existing Book list to new Book List
     }
     // public void insertBook(Book book, int index){}
-    public void insertBook(Book book, int index) {
-        Book[] temp = new Book[books.length + 1];
-        for(int i = 0; i < index; i ++) {
+    public void insertBook(Book book, int index) { 
+        Book[] temp = new Book[books.length + 1]; //Make a new book list that allow one more book
+        for(int i = 0; i < index; i ++) { //Copy original to new book List first half
             temp[i] = books[i];
 
         }
-        temp[index] = book;
-        for(int i = index; i < books.length; i ++) {
+        temp[index] = book; //Set inserted book to destinated index.
+        for(int i = index; i < books.length; i ++) {//Copy original to new book List second half
             temp[i + 1] = books[i];
 
         }
-        books = temp;
+        books = temp; //Set existing Book list to new Book List
 
     }
     // public void removeBook(Book book){}
     public void removeBook(Book book) {
-        for(int i = 0; i < books.length; i ++) {
+        for(int i = 0; i < books.length; i ++) { //Check books to find target with same ISBN
             if(books[i].getIsbn().equals(book.getIsbn())) {
-                if(books[i].getQuantity() > 1) {
+                if(books[i].getQuantity() > 1) { //Remove 1 Quantity when more than one
                     books[i].setQuantity(books[i].getQuantity() - 1);
                 }
                 else {
-                    books[i] = null;
+                    books[i] = null; //Else remove book entirely
                 }
 
             }
         }
         consolidateBooks();
-        if(books[books.length - 1] == null) {
-            Book[] temp = new Book[books.length - 1];
-            for(int i = 0; i < temp.length; i ++) {
+        if(books[books.length - 1] == null) { //Check if the remove was complete
+            Book[] temp = new Book[books.length - 1]; //Make a new book list that allow one less book
+            for(int i = 0; i < temp.length; i ++) {//Copy original to new book List
                 temp[i] = books[i];
     
             }
@@ -106,11 +106,11 @@ public class BookStore{
     }
 
     public void consolidateBooks() {
-        int slot = 0;
-        for(int i = 0; i < books.length; i ++) {
-            if(books[i] != null) {
+        int slot = 0; 
+        for(int i = 0; i < books.length; i ++) { //Loop over all books to check if any is null
+            if(books[i] != null) { //Set first avaliable index to existing books
                 books[slot] = books[i];
-                if(i != slot) {
+                if(i != slot) { //Remove book from original when it is moved
                     books[i] = null;
                 }
                 slot ++;

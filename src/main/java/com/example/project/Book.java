@@ -10,6 +10,7 @@ public class Book{
 
     //requires 1 constructor with 5 arguments that intitialize the attribtues of the class.
     public Book(String title, String author, int yearPublished, String isbn, int quantity) {
+        //Initialize attributes
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;

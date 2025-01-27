@@ -7,6 +7,7 @@ public class User{
     private Book[] books = new Book[5];
     //requires 1 contructor with two parameters that will initialize the name and id
     public User(String name, String Id) {
+        //Initializes the instance variables
         this.name = name;
         this.Id = Id;
     }
@@ -44,7 +45,7 @@ public class User{
     public String bookListInfo() {
         String bookList = "";
         for(Book book: books) {
-            if(book != null) {
+            if(book != null) { //Loop over books to check if book exist
                 bookList += book.bookInfo() + "\n";
             }
             else {
