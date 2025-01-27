@@ -309,6 +309,7 @@ public class NYFL {
         if (nyfl.getBooks().length > 0 && isThereStudent()) { // Check if there are students and books in the library
             System.out.print("Please enter your Name or ID (0 to quit): ");
             String idName = scan.nextLine();
+            boolean studentFound = false;
             if (!idName.equals("0")) {
                 Book[] studentBooks = null;
                 for (int i = 0; i < students.length; i++) { // Loop to find target student with the same name or ID
@@ -316,32 +317,49 @@ public class NYFL {
                         if (students[i].getName().equalsIgnoreCase(idName) || students[i].getId().equalsIgnoreCase(idName)) {
                             borrow = searchBook(); // Use previous module to aid searching Book and borrow that Book
                             studentBooks = students[i].getBook();
-                            break;
+                            studentFound = true;
                         }
-                        if (borrow != null && studentBooks != null) { // Check if borrow was successful, e.g., Book found
-                            for (int j = 0; j < studentBooks.length; j++) {
-                                if (studentBooks[j] != null) { // Corrected from studentBooks[i]
-                                    if (studentBooks[j].getIsbn().equals(borrow.getIsbn())) { // Check if student has the Book
-                                        selection = 0; // Indicates that the student already has the Book
-                                        break; // Exit loop when found
-                                    }
+                    }
+                    if (borrow != null) { // Check if borrow was successful, e.g., Book found
+                        for (int j = 0; j < studentBooks.length; j++) {
+                            if (studentBooks[j] != null) { 
+                                if (studentBooks[j].getIsbn().equals(borrow.getIsbn())) { // Check if student has the Book
+                                    selection = 0; // Indicates that the student already has the Book
+                                    System.out.println("You have already borrowed this book! Borrow another one");
+                                    break; // Exit loop as book already borrowed
                                 }
                             }
                         }
-                        if (selection != 0) { // If student doesn't have the Book, then allow borrow
-                            tempStorage.setBooks(students[i].getBook()); // Set a virtual library and Book list to store student Books
-                            tempStorage.addBook(borrow); // Add the Book to virtual library
-                            students[i].setBooks(tempStorage.getBooks()); // Set student Books to virtual library to update the borrowed Book
-                            System.out.println("Successfully borrowed a book with title: " + borrow.getTitle());
-                            nyfl.removeBook(borrow); // Remove a copy of Book from the library
-                            break; // Exit loop after successful borrow
-                        } else {
-                            System.out.println("You have already borrowed this book! Borrow another one");
-                            break; // Exit loop as book already borrowed
+                    
+                    // Check if the student has space for more books
+                    boolean canBorrow = false;
+                    for (int j = 0; j < studentBooks.length; j++) {
+                        if (studentBooks[j] == null) {
+                            canBorrow = true;
+                            break;
                         }
-                    } else {
-                        continue; // Continue to the next student if current one is null
                     }
+
+                    if (canBorrow) {
+                        // Add book to student's borrowed list
+                        for (int j = 0; j < studentBooks.length; j++) {
+                            if (studentBooks[j] == null) {
+                                studentBooks[j] = borrow;
+                                // Update library
+                                nyfl.removeBook(borrow);
+                                break;
+                            }
+                        }
+                        System.out.println("Book borrowed successfully!");
+                        break;
+                    } else {
+                        System.out.println("You cannot borrow more books.");
+                    }
+                    }
+
+                }
+                if(!studentFound) {
+                    System.out.println("Student is not found!");
                 }
             }
         } else if (nyfl.getBooks().length > 0 && !isThereStudent()) { // No Student
